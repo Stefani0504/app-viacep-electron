@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APP - Pesquisa de CEP</title>
+</head>
+<body>
+    <h1>Pesquisa de CEP </h1>
+    <p>Informe o CEP para buscar as informações.</p>
+
+    
+    <input type="text"
+    id="cep-usuario"
+     placeholder="Digite o CEP. EX 14800-010" 
+     maxlength="8"
+     >
+    <button id="btn-pesquisar">Pesquisar</button>
+    <script>
+        const btnPesquisar = document.getElementById('btn-pesquisar');
+
+        async function consultarCEP(){
+            const cepUsuario = document.getElementById("cep-usuario").value;
+            const resultado = document.getElementById("resultado");
+
+            const responseApi = await fetch(`https://viacep.com.br/ws/${cepUsuario}/json/`);
+            const info = await responseApi.json();
+
+            resultado.innerHTML = `
+            <p>CEP: ${info.cep}</p>
+            <p>Logradouro: ${info.logradouro}</p>
+            <p>Bairro: ${info.bairro}</p>
+            <p>Localidade: ${info.localidade}</p>
+            <p>UF: ${info.uf}</p>
+            <p>DDD: ${info.ddd}</p>
+                `;
+        }
+    
+        btnPesquisar.addEventListener('click', consultarCEP);
+    
+         </script>
+
+
+</body>
+</html>
